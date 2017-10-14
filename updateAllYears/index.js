@@ -1,8 +1,8 @@
 var svg = d3.select('svg').append('g').attr('transform','translate(100,100)');
 
 //set up variables to hold two versions of the data, one for each year
-var data2016;
-var data2000;
+var nestedData = [];
+var yearData = [];
 
 //set up a tracker variable to watch the button click state
 var clicked = true;
@@ -25,7 +25,14 @@ svg.append("g")
 
 
 //import the data from the .csv file
-d3.csv('./incomeData.csv', function(dataIn){
+d3.csv('./incomeDataAllYears.csv', function(dataIn){
+
+    nestedData = d3.nest()
+        .key(function(d){return d.year})
+        .entries(dataIn);
+
+    console.log(nestedData);
+
 
     //This is a JS filter, which is really a fancy for loop. It takes the original array (dataIn), and the filter() function goes
     //through each item in the array and checks it for something. The "something" is defined by an anonymous function function(d){},
@@ -84,6 +91,7 @@ d3.csv('./incomeData.csv', function(dataIn){
 
 });
 
+
 //this function draws the actual data points as circles. It's split from the enter() command because we want to run it many times
 //without adding more circles each time.
 function drawPoints(pointData){
@@ -107,19 +115,38 @@ function drawPoints(pointData){
         });
 }
 
-//this function runs when the HTML button is clicked.
-function buttonClicked(){
+function updateData(selectedYear){
+    return nestedData.filter(function(d){
+        return d.key == selectedYear
+    })[0].values;
 
-    //check to see whether the tracker variable is true. If it is, use the 2017 data set
-    if(clicked == true){
-        drawPoints(data2000);  //call the draw function again, to redraw the circles
-        clicked = false;       //reset the value of the tracker variable
-    }
-    else{   //if the tracker variable is not true, use the 2016 data set
-        drawPoints(data2016);
-        clicked = true;
-    }
+} //track the data update function
+
+
+//this function runs when the HTML button is clicked.
+function sliderMoved(sliderValue){
+
+    console.log(sliderValue);
+
+    var newData = updateData(sliderValue);
+
+    drawPoints(newData);
+
+
 
 
 
 }
+
+/*
+
+var year ="2000";
+setInterval(function(){
+    var newData = updateData(year);
+    drawPoints(newData);
+    if (year<2016){year++;}
+    else{year = 2000;}
+
+} ,1000 )
+
+*/

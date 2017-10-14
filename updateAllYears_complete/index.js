@@ -141,7 +141,7 @@ function drawPoints(pointData){
 
 //this function runs when the HTML slider is moved
 function sliderMoved(value){
-
+console.log(value);
     newData = updateData(value);
     drawPoints(newData);
 

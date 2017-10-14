@@ -1,5 +1,9 @@
 var svg = d3.select('svg').append('g').attr('transform','translate(100,100)');
 
+
+
+
+
 //set up variables to hold two versions of the data, one for each year
 var data2016;
 var data2000;
