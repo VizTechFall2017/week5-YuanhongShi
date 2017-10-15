@@ -135,13 +135,15 @@ function drawPoints(pointData){
 
 //connect all the points at the same path
 
-   /* var path = svg.append('path')
+    var path = svg.append('path')
         .datum(pointData)
         .attr('class', 'line')
-        .attr('stroke', 'steelblue')
+        .attr('stroke', function(d,i){
+            return 'rgb(20, '+((i*30) + 100)+', 20)';
+        })
         .attr('stroke-width', 3)
         .attr('d', lineFunction)
-        .attr('fill', 'none');*/
+        .attr('fill', 'none');
 
 
 }
@@ -159,8 +161,7 @@ function sliderMoved(sliderValue) {
 
     console.log(sliderValue);
 
-    var newData = [];
-        newData = updateData(sliderValue);
+    var newData = updateData(sliderValue);
     console.log(newData);
 
     drawPoints(newData);
