@@ -133,21 +133,7 @@ function drawPoints(pointData){
         });
 
 
-//connect all the points at the same path
-
-    var path = svg.append('path')
-        .datum(pointData)
-        .attr('class', 'line')
-        .attr('stroke', function(d,i){
-            return 'rgb(20, '+((i*30) + 100)+', 20)';
-        })
-        .attr('stroke-width', 3)
-        .attr('d', lineFunction)
-        .attr('fill', 'none');
-
-
 }
-
 
 function updateData(selectedRange){
     return nestedData.filter(function(d){
